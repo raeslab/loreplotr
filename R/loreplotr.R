@@ -20,7 +20,7 @@ validate_input <- function(df, x,y) {
 #' @param i  index of the current group
 #' @param groups  labels of all groups in the plot
 #' @return dataframe with positions
-#' @import magrittr
+#' @importFrom magrittr %>%
 #' @import dplyr
 #' @importFrom stats runif
 #' @export
@@ -60,7 +60,7 @@ get_group_dots_data <- function(dots_data, i, groups) {
 #' @import nnet
 #' @import effects
 #' @import dplyr
-#' @import magrittr
+#' @importFrom magrittr %>%
 #' @import tidyr
 #' @importFrom stats predict reformulate
 #' @export
@@ -112,7 +112,7 @@ plot_area <- function(df, x, y, draw_dots=TRUE) {
 #' @param y  Categorical variable, predicated probabilities shown on y-axis
 #' @param draw_dots Show a dot in the plot for each sample (default=TRUE)
 #' @return ggplot2 plot
-#' @import magrittr
+#' @importFrom magrittr %>%
 #' @import ggplot2
 #' @examples
 #' library(loreplotr)

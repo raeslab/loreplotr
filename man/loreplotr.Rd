@@ -13,7 +13,7 @@ loreplotr(df, x, y, draw_dots = TRUE)
 
 \item{y}{Categorical variable, predicated probabilities shown on y-axis}
 
-\item{draw_dots}{Show a dot in the plot for eachs sample (default=TRUE)}
+\item{draw_dots}{Show a dot in the plot for each sample (default=TRUE)}
 }
 \value{
 ggplot2 plot
