@@ -12,6 +12,18 @@ validate_input <- function(df, x,y) {
   }
 }
 
+#' Finds where the dots for a specific group are located
+#'
+#' Returns a dataframe with positions of samples that can be superimposed on the area plot.
+#'
+#' @param dots_data input data
+#' @param i  index of the current group
+#' @param groups  labels of all groups in the plot
+#' @return dataframe with positions
+#' @import magrittr
+#' @import dplyr
+#' @importFrom stats runif
+#' @export
 get_group_dots_data <- function(dots_data, i, groups) {
   group = groups[i]
   end_pos = length(groups) + 2
@@ -35,6 +47,23 @@ get_group_dots_data <- function(dots_data, i, groups) {
   return(group_dots_data)
 }
 
+#' Plot Area
+#'
+#' Internal loreplotr function that draws the plot
+#'
+#' @param df The input data
+#' @param x  Continuous variable to be shown on the x-axis
+#' @param y  Categorical variable, predicated probabilities shown on y-axis
+#' @param draw_dots Show a dot in the plot for eachs sample (default=TRUE)
+#' @return ggplot2 plot
+#' @import ggplot2
+#' @import nnet
+#' @import effects
+#' @import dplyr
+#' @import magrittr
+#' @import tidyr
+#' @importFrom stats predict reformulate
+#' @export
 plot_area <- function(df, x, y, draw_dots=TRUE) {
   # Prepare data and load it into the global environment (required for Effect function)
   .GlobalEnv$wdf = df %>% select(c({{x}}, {{y}}))
@@ -81,13 +110,17 @@ plot_area <- function(df, x, y, draw_dots=TRUE) {
 #' @param df The input data
 #' @param x  Continuous variable to be shown on the x-axis
 #' @param y  Categorical variable, predicated probabilities shown on y-axis
+#' @param draw_dots Show a dot in the plot for each sample (default=TRUE)
 #' @return ggplot2 plot
+#' @import magrittr
+#' @import ggplot2
 #' @examples
 #' library(loreplotr)
 #' data("mtcars")
 #'
 #' mtcars$cyl <- paste("cyl", mtcars$cyl, sep="_")
-#' mtcars %>% loreplotr("mpg", "cyl")
+#' g <- loreplotr(mtcars, "mpg", "cyl")
+#' g
 #' @export
 loreplotr <- function(df, x, y, draw_dots=TRUE) {
   validate_input(df, x, y)
