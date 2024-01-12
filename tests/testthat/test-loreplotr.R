@@ -1,3 +1,5 @@
+library(loreplotr)
+
 
 test_that("loreplotr works", {
   data("mtcars")

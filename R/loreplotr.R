@@ -83,6 +83,9 @@ plot_area <- function(df, x, y, draw_dots=TRUE) {
 #' @param y  Categorical variable, predicated probabilities shown on y-axis
 #' @return ggplot2 plot
 #' @examples
+#' library(loreplotr)
+#' data("mtcars")
+#'
 #' mtcars$cyl <- paste("cyl", mtcars$cyl, sep="_")
 #' mtcars %>% loreplotr("mpg", "cyl")
 #' @export
