@@ -28,21 +28,21 @@ get_group_dots_data <- function(dots_data, i, groups) {
   group = groups[i]
   end_pos = length(groups) + 2
 
-  group_dots_data = dots_data %>% filter(V1 == group)
+  group_dots_data = dots_data %>% filter(.data$V1 == group)
 
   if (i+3 < end_pos) {
     group_dots_data = group_dots_data %>% mutate_at(groups,as.numeric) %>%
       mutate(ymax = rowSums(across((i+2):end_pos)),
              ymin = rowSums(across((i+3):end_pos))) %>%
-      mutate(position = runif(n(), ymin + (ymax-ymin)*0.05, ymax - (ymax-ymin)*0.05))
+      mutate(position = runif(n(), .data$ymin + (.data$ymax-.data$ymin)*0.05, .data$ymax - (.data$ymax-.data$ymin)*0.05))
   } else {
     group_dots_data = group_dots_data %>% mutate_at(groups,as.numeric) %>%
       mutate(ymax = rowSums(across((i+2):end_pos)),
              ymin = 0) %>%
-      mutate(position = runif(n(), ymin + (ymax-ymin)*0.05, ymax - (ymax-ymin)*0.05))
+      mutate(position = runif(n(), .data$ymin + (.data$ymax-.data$ymin)*0.05, .data$ymax - (.data$ymax-.data$ymin)*0.05))
   }
 
-  group_dots_data = group_dots_data %>% select(V2, position) %>% mutate_if(is.character,as.numeric)
+  group_dots_data = group_dots_data %>% select(.data$V2, .data$position) %>% mutate_if(is.character,as.numeric)
 
   return(group_dots_data)
 }
@@ -66,6 +66,7 @@ get_group_dots_data <- function(dots_data, i, groups) {
 #' @export
 plot_area <- function(df, x, y, draw_dots=TRUE) {
   # Prepare data and load it into the global environment (required for Effect function)
+  wdf <- df %>% select(c({{x}}, {{y}}))
   .GlobalEnv$wdf = df %>% select(c({{x}}, {{y}}))
 
   # Fit multinomial and generate data for areas
@@ -96,7 +97,7 @@ plot_area <- function(df, x, y, draw_dots=TRUE) {
     for (i in 1:length(groups)) {
       group_dots_data = get_group_dots_data(dots_data, i, groups)
 
-      g = g + geom_point(data=group_dots_data , aes(x=V2, y=position), fill="white", colour="white", size=3, alpha=0.7)
+      g = g + geom_point(data=group_dots_data , aes(x=.data$V2, y=.data$position), fill="white", colour="white", size=3, alpha=0.7)
     }
   }
 
