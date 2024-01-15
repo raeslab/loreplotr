@@ -116,6 +116,7 @@ plot_area <- function(df, x, y, draw_dots=TRUE) {
 #' @importFrom magrittr %>%
 #' @import ggplot2
 #' @examples
+#' library(dplyr)
 #' library(loreplotr)
 #' data("mtcars")
 #'

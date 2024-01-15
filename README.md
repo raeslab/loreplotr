@@ -31,6 +31,7 @@ renv::install("raeslab/loreplotr")
 LoreplotR needs to be passed a dataframe, the (numerical) feature to plot on the x-axis and the (categorical) feature for the y-axis. There is one optional parameter ```draw_dots``` which allows you to show/hide dots indicating where individual samples included in the dataframe are located in the plot.
 
 ```R
+library(dplyr)
 library(loreplotr)
 
 data("mtcars")
@@ -48,6 +49,7 @@ As LoreplotR is built upon ggplot2, customization is possible using functions fr
 
 
 ```R
+library(dplyr)
 library(loreplotr)
 library(ggplot2)
 

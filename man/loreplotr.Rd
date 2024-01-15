@@ -22,6 +22,7 @@ ggplot2 plot
 Draws a logistic regression plot for the provided data
 }
 \examples{
+library(dplyr)
 library(loreplotr)
 data("mtcars")
 
