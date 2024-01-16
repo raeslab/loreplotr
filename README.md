@@ -25,10 +25,15 @@ If you are using ```renv```, instead use the commands below to install this pack
 renv::install("raeslab/loreplotr")
 ```
 
+## Usage
 
-## Example
+LoreplotR needs to be passed a dataframe, the (numerical) feature to plot on the x-axis and the (categorical) feature for the y-axis. There is one optional parameter ```draw_dots``` which allows you to show/hide dots indicating where individual samples included in the dataframe are located in the plot. The package will return a ```ggplot2``` plot
+which can be saved/changed using functions from that library.
 
-LoreplotR needs to be passed a dataframe, the (numerical) feature to plot on the x-axis and the (categorical) feature for the y-axis. There is one optional parameter ```draw_dots``` which allows you to show/hide dots indicating where individual samples included in the dataframe are located in the plot.
+
+### Example
+
+Below is an example that shows data from the ```mtcars``` dataset and highlights how the proportions of cars with a different number of cylinders changes in function of fuel efficiency (here included as mile per gallon, mpg).
 
 ```R
 library(dplyr)
@@ -63,3 +68,15 @@ t <- t + scale_fill_manual(values = c("#DC9362", "#6BE19F", "#A373E5"))
 t
 ```
 ![Example loreplot using mtcars dataset and custom colors](./docs/img/loreplot_custom_colors.png)
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+  * Found a bug or have some suggestions? Open an [issue](https://github.com/raeslab/loreplotr/issues).
+  * Pull requests are welcome! Though open an [issue](https://github.com/raeslab/loreplotr/issues) first to discuss which features/changes you wish to implement.
+
+## Contact
+
+loreplotR was developed by [Sebastian Proost](https://sebastian.proost.science/) at the [RaesLab](https://raeslab.sites.vib.be/en) and was adopted from code written by [Sara Vieira-Silva](https://saravsilva.github.io/).
+
