@@ -1,3 +1,5 @@
+library(dplyr)
+library(ggplot2)
 library(loreplotr)
 
 # source("./R/loreplotr.R")
