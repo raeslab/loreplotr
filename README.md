@@ -71,12 +71,12 @@ t
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Any contributions you make are **greatly appreciated**.
 
   * Found a bug or have some suggestions? Open an [issue](https://github.com/raeslab/loreplotr/issues).
   * Pull requests are welcome! Though open an [issue](https://github.com/raeslab/loreplotr/issues) first to discuss which features/changes you wish to implement.
 
-## Contact
+## Contact and License
 
-loreplotR was developed by [Sebastian Proost](https://sebastian.proost.science/) at the [RaesLab](https://raeslab.sites.vib.be/en) and was adopted from code written by [Sara Vieira-Silva](https://saravsilva.github.io/).
+loreplotR was developed by [Sebastian Proost](https://sebastian.proost.science/) at the [RaesLab](https://raeslab.sites.vib.be/en) (part of [VIB](https://vib.be/en#/) and [KULeuven](https://www.kuleuven.be/english/kuleuven/index.html))and was adopted from code written by [Sara Vieira-Silva](https://saravsilva.github.io/). loreplotR is available under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International]((https://creativecommons.org/licenses/by-nc-sa/4.0/)) license.
 
