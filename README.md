@@ -69,6 +69,10 @@ t
 ```
 ![Example loreplot using mtcars dataset and custom colors](./docs/img/loreplot_custom_colors.png)
 
+## Troubleshooting/FAQ
+
+* **Why do my category labels change, with spaces replaced by dots and numbers preceded by an 'X'?** This occurs because R imposes specific rules on valid column names. Invalid characters in column names are replaced with dots, and numbers at the start are prefixed with 'X'. This is detailed in the [make.names function](https://stat.ethz.ch/R-manual/R-devel/library/base/html/make.names.html). Since loreplotr includes a step that necessitates creating a dataframe with a column for each group, label modifications occur. It's best to use valid labels whenever possible. If not feasible, consider using ggplot2's `scale_fill_discrete` or `scale_fill_manual` to adjust legend labels.
+
 ## Contributing
 
 Any contributions you make are **greatly appreciated**.
