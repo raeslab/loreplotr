@@ -69,6 +69,27 @@ t
 ```
 ![Example loreplot using mtcars dataset and custom colors](./docs/img/loreplot_custom_colors.png)
 
+
+To change the appearance of the dots, loreplotr exposes the size, shape, fill, colour and alpha parameters through `dots_size`, `dots_shape`,`dots_fill`,`dots_colour` and,`dots_alpha` respectively. 
+
+```R
+library(dplyr)
+library(ggplot2)
+library(loreplotr)
+
+data("mtcars")
+
+mtcars$cyl <- paste("cyl", mtcars$cyl, sep="_")
+
+t <- mtcars %>% loreplotr("mpg", "cyl", dots_colour="black", dots_size=2, dots_alpha = 1, dots_shape=3)
+t
+
+t <- t + scale_fill_manual(values = c("#DC9362", "#6BE19F", "#A373E5"))
+t
+```
+
+![Example loreplot using mtcars dataset and custom dots](./docs/img/loreplot_custom_dots.png)
+
 ## Troubleshooting/FAQ
 
 * **Why do my category labels change, with spaces replaced by dots and numbers preceded by an 'X'?** This occurs because R imposes specific rules on valid column names. Invalid characters in column names are replaced with dots, and numbers at the start are prefixed with 'X'. This is detailed in the [make.names function](https://stat.ethz.ch/R-manual/R-devel/library/base/html/make.names.html). Since loreplotr includes a step that necessitates creating a dataframe with a column for each group, label modifications occur. It's best to use valid labels whenever possible. If not feasible, consider using ggplot2's `scale_fill_discrete` or `scale_fill_manual` to adjust legend labels.

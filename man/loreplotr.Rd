@@ -4,7 +4,17 @@
 \alias{loreplotr}
 \title{Draw Loreplot}
 \usage{
-loreplotr(df, x, y, draw_dots = TRUE)
+loreplotr(
+  df,
+  x,
+  y,
+  draw_dots = TRUE,
+  dots_shape = 21,
+  dots_fill = "white",
+  dots_colour = "white",
+  dots_size = 3,
+  dots_alpha = 0.7
+)
 }
 \arguments{
 \item{df}{The input data}
@@ -14,6 +24,16 @@ loreplotr(df, x, y, draw_dots = TRUE)
 \item{y}{Categorical variable, predicated probabilities shown on y-axis}
 
 \item{draw_dots}{Show a dot in the plot for each sample (default=TRUE)}
+
+\item{dots_shape}{Shape of the dots (default=21)}
+
+\item{dots_fill}{Fill color of the dots (default="white")}
+
+\item{dots_colour}{Border color of the dots (default="white")}
+
+\item{dots_size}{Size of the dots (default=3)}
+
+\item{dots_alpha}{Transparency of the dots (default=0.7)}
 }
 \value{
 ggplot2 plot

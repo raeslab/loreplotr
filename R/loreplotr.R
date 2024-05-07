@@ -55,6 +55,11 @@ get_group_dots_data <- function(dots_data, i, groups) {
 #' @param x  Continuous variable to be shown on the x-axis
 #' @param y  Categorical variable, predicated probabilities shown on y-axis
 #' @param draw_dots Show a dot in the plot for eachs sample (default=TRUE)
+#' @param dots_shape Shape of the dots (default=21)
+#' @param dots_fill Fill color of the dots (default="white")
+#' @param dots_colour Border color of the dots (default="white")
+#' @param dots_size Size of the dots (default=3)
+#' @param dots_alpha Transparency of the dots (default=0.7)
 #' @return ggplot2 plot
 #' @import ggplot2
 #' @import nnet
@@ -64,7 +69,7 @@ get_group_dots_data <- function(dots_data, i, groups) {
 #' @import tidyr
 #' @importFrom stats predict reformulate
 #' @export
-plot_area <- function(df, x, y, draw_dots=TRUE) {
+plot_area <- function(df, x, y, draw_dots=TRUE, dots_shape=21, dots_fill="white", dots_colour="white", dots_size=3, dots_alpha=0.7) {
   # Prepare data and load it into the global environment (required for Effect function)
   wdf <- df %>% select(c({{x}}, {{y}}))
   .GlobalEnv$wdf = df %>% select(c({{x}}, {{y}}))
@@ -97,7 +102,7 @@ plot_area <- function(df, x, y, draw_dots=TRUE) {
     for (i in 1:length(groups)) {
       group_dots_data = get_group_dots_data(dots_data, i, groups)
 
-      g = g + geom_point(data=group_dots_data , aes(x=.data$V2, y=.data$position), fill="white", colour="white", size=3, alpha=0.7)
+      g = g + geom_point(data=group_dots_data , aes(x=.data$V2, y=.data$position), shape=dots_shape, fill=dots_fill, colour=dots_colour, size=dots_size, alpha=dots_alpha)
     }
   }
 
@@ -112,6 +117,11 @@ plot_area <- function(df, x, y, draw_dots=TRUE) {
 #' @param x  Continuous variable to be shown on the x-axis
 #' @param y  Categorical variable, predicated probabilities shown on y-axis
 #' @param draw_dots Show a dot in the plot for each sample (default=TRUE)
+#' @param dots_shape Shape of the dots (default=21)
+#' @param dots_fill Fill color of the dots (default="white")
+#' @param dots_colour Border color of the dots (default="white")
+#' @param dots_size Size of the dots (default=3)
+#' @param dots_alpha Transparency of the dots (default=0.7)
 #' @return ggplot2 plot
 #' @importFrom magrittr %>%
 #' @import ggplot2
@@ -124,11 +134,11 @@ plot_area <- function(df, x, y, draw_dots=TRUE) {
 #' g <- loreplotr(mtcars, "mpg", "cyl")
 #' g
 #' @export
-loreplotr <- function(df, x, y, draw_dots=TRUE) {
+loreplotr <- function(df, x, y, draw_dots=TRUE, dots_shape=21, dots_fill="white", dots_colour="white", dots_size=3, dots_alpha=0.7) {
   validate_input(df, x, y)
 
   g = df %>%
-    plot_area(x, y, draw_dots = draw_dots)
+    plot_area(x, y, draw_dots = draw_dots, dots_shape=dots_shape, dots_fill=dots_fill, dots_colour=dots_colour, dots_size=dots_size, dots_alpha=dots_alpha)
 
   return(g)
 }
