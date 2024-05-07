@@ -1,11 +1,15 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
+  workflow_dispatch:
   push:
     branches: [main, master]
   pull_request:
     branches: [main, master]
-
+  schedule:
+    # execute once a week on monday 
+    - cron:  '0 1 * * 1'
+    
 name: R-CMD-check
 
 jobs:
@@ -22,7 +26,7 @@ jobs:
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel-1'}
+          #  - {os: ubuntu-latest,   r: 'oldrel-1'} # one dependency no longer supports this
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
