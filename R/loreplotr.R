@@ -66,25 +66,33 @@ get_group_dots_data <- function(dots_data, i, groups) {
 #' @import effects
 #' @import dplyr
 #' @importFrom magrittr %>%
+#' @importFrom stats anova
 #' @import tidyr
 #' @importFrom stats predict reformulate
 #' @export
 plot_area <- function(df, x, y, draw_dots=TRUE, dots_shape=21, dots_fill="white", dots_colour="white", dots_size=3, dots_alpha=0.7) {
   # Prepare data and load it into the global environment (required for Effect function)
-  wdf <- df %>% select(c({{x}}, {{y}}))
+  wdf = df %>% select(c({{x}}, {{y}}))
   .GlobalEnv$wdf = df %>% select(c({{x}}, {{y}}))
 
   # Fit multinomial and generate data for areas
-  formula <- reformulate(x, response = y)
+  formula = reformulate(x, response = y)
   mnom_model = multinom(formula, data=wdf)
+
+  print(summary(mnom_model))
+
+  null_formula = reformulate("1", response = y)
+  null_model = multinom(null_formula, data=wdf)
+
+  print(anova(mnom_model, null_model))
 
   predicted_probabilities = Effect(x, mnom_model, xlevels=300)
   probabilities_df = data.frame(predicted_probabilities$x, predicted_probabilities$prob)
 
-  melt_data <- pivot_longer(probabilities_df, -{{x}}, names_to = y, values_to = "value")
-  melt_data[[y]] <-  gsub('prob.', '', melt_data[[y]])
+  melt_data = pivot_longer(probabilities_df, -{{x}}, names_to = y, values_to = "value")
+  melt_data[[y]] =  gsub('prob.', '', melt_data[[y]])
 
-  g <- ggplot(melt_data, aes_string(x=x, y="value", fill=y)) +
+  g = ggplot(melt_data, aes_string(x=x, y="value", fill=y)) +
     geom_area() +
     theme(
       panel.grid.major = element_blank(),
