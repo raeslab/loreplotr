@@ -133,6 +133,7 @@ plot_area <- function(df, x, y, draw_dots=TRUE, dots_shape=21, dots_fill="white"
 #' @return ggplot2 plot
 #' @importFrom magrittr %>%
 #' @import ggplot2
+#' @importFrom dplyr mutate
 #' @examples
 #' library(dplyr)
 #' library(loreplotr)
@@ -146,6 +147,7 @@ loreplotr <- function(df, x, y, draw_dots=TRUE, dots_shape=21, dots_fill="white"
   validate_input(df, x, y)
 
   g = df %>%
+    mutate(across(c(y), ~as.character(.))) %>% # Force the categories to be characters (required for adding dots)
     plot_area(x, y, draw_dots = draw_dots, dots_shape=dots_shape, dots_fill=dots_fill, dots_colour=dots_colour, dots_size=dots_size, dots_alpha=dots_alpha)
 
   return(g)
