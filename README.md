@@ -88,6 +88,30 @@ t <- t + scale_fill_manual(values = c("#DC9362", "#6BE19F", "#A373E5"))
 t
 ```
 
+Support for two classes is now partially implemented, though the classes need to be converted to 0 and 1 for the plot to work! (Note that dots currently aren't show when using two classes)
+
+```R
+library(dplyr)
+library(ggplot2)
+library(loreplotr)
+
+data("mtcars")
+
+mtcars$cyl <- paste("cyl", mtcars$cyl, sep="_")
+
+mtcars$cyl <- gsub("cyl_4", 0, mtcars$cyl)
+mtcars$cyl <- gsub("cyl_6", 0, mtcars$cyl)
+mtcars$cyl <- gsub("cyl_8", 1, mtcars$cyl)
+
+mtcars$cyl <- as.numeric(mtcars$cyl)
+
+t <- mtcars %>% loreplotr("mpg", "cyl")
+t
+
+t <- t + scale_fill_manual(values = c("#DC9362", "#6BE19F"))
+t
+```
+
 ![Example loreplot using mtcars dataset and custom dots](./docs/img/loreplot_custom_dots.png)
 
 ## Troubleshooting/FAQ

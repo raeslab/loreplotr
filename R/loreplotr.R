@@ -53,7 +53,7 @@ get_group_dots_data <- function(dots_data, i, groups) {
 #'
 #' @param df The input data
 #' @param x  Continuous variable to be shown on the x-axis
-#' @param y  Categorical variable, predicated probabilities shown on y-axis
+#' @param y  Categorical variable, predicated probabilities shown on y-axis (if there are only two classes they need to be 0 and 1 !)
 #' @param draw_dots Show a dot in the plot for eachs sample (default=TRUE)
 #' @param dots_shape Shape of the dots (default=21)
 #' @param dots_fill Fill color of the dots (default="white")
@@ -67,6 +67,8 @@ get_group_dots_data <- function(dots_data, i, groups) {
 #' @import dplyr
 #' @importFrom magrittr %>%
 #' @importFrom stats anova
+#' @importFrom stats glm
+#' @importFrom stats binomial
 #' @import tidyr
 #' @importFrom stats predict reformulate
 #' @export
@@ -75,19 +77,37 @@ plot_area <- function(df, x, y, draw_dots=TRUE, dots_shape=21, dots_fill="white"
   wdf = df %>% select(c({{x}}, {{y}}))
   .GlobalEnv$wdf = df %>% select(c({{x}}, {{y}}))
 
-  # Fit multinomial and generate data for areas
+  # Fit multinomial and generate data for areas (use glm for binary, multinom for > 2 classes)
   formula = reformulate(x, response = y)
-  mnom_model = multinom(formula, data=wdf)
+
+  num_classes <- length(unique(wdf[[y]]))
+
+  if (num_classes > 2) {
+    mnom_model <- multinom(formula, data = wdf)
+    predicted_probabilities = Effect(x, mnom_model, xlevels=300)
+    probabilities_df = data.frame(predicted_probabilities$x, predicted_probabilities$prob)
+  } else {
+    wdf[[y]] = as.numeric(wdf[[y]])
+    mnom_model <- glm(formula, family = binomial, data = wdf)
+
+    # Generate predicted probabilities manually for binary logistic regression
+    x_seq <- seq(min(wdf[[x]]), max(wdf[[x]]), length.out = 300)
+    new_data <- data.frame(x_seq)
+    colnames(new_data) <- x
+    probabilities <- predict(mnom_model, newdata = new_data, type = "response")
+    probabilities_df <- data.frame(x_seq, prob_0 = 1 - probabilities, prob_1 = probabilities)
+    colnames(probabilities_df)[1] <- x
+  }
 
   print(summary(mnom_model))
 
-  null_formula = reformulate("1", response = y)
-  null_model = multinom(null_formula, data=wdf)
+  if (num_classes > 2) {
+    null_formula <- reformulate("1", response = y)
+    null_model <- multinom(null_formula, data = wdf)
+    print(anova(mnom_model, null_model))
+  }
 
-  print(anova(mnom_model, null_model))
 
-  predicted_probabilities = Effect(x, mnom_model, xlevels=300)
-  probabilities_df = data.frame(predicted_probabilities$x, predicted_probabilities$prob)
 
   melt_data = pivot_longer(probabilities_df, -{{x}}, names_to = y, values_to = "value")
   melt_data[[y]] =  gsub('prob.', '', melt_data[[y]])
@@ -101,11 +121,10 @@ plot_area <- function(df, x, y, draw_dots=TRUE, dots_shape=21, dots_fill="white"
       axis.title.y = element_blank(),
     )
 
-  if (draw_dots) {
+  if (draw_dots && num_classes > 2) {
     groups = unique(melt_data[[y]])
 
     dots_data <- as.data.frame(cbind(df[[y]], df[[x]], predict(mnom_model, newdata = df[x], "probs")))
-
 
     for (i in 1:length(groups)) {
       group_dots_data = get_group_dots_data(dots_data, i, groups)

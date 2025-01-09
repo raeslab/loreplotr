@@ -21,7 +21,7 @@ plot_area(
 
 \item{x}{Continuous variable to be shown on the x-axis}
 
-\item{y}{Categorical variable, predicated probabilities shown on y-axis}
+\item{y}{Categorical variable, predicated probabilities shown on y-axis (if there are only two classes they need to be 0 and 1 !)}
 
 \item{draw_dots}{Show a dot in the plot for eachs sample (default=TRUE)}
 
